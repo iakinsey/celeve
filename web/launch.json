@@ -1,0 +1,16 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "chrome",
+            "request": "launch",
+            "name": "Launch Chrome against localhost",
+            "url": "http://localhost:3000", // Adjust if your app runs on a different port
+            "webRoot": "${workspaceFolder}/src", // Points to your source files
+            "sourceMaps": true,
+            "trace": true, // Enable logging of the Debug Adapter
+            "preLaunchTask": "npm: start", // Ensure your app starts when you begin debugging
+            "smartStep": true // Automatically steps through sourcemapped code
+        }
+    ]
+}

@@ -1,0 +1,119 @@
+/* CalendarDark.css */
+
+.rbc-calendar {
+    background-color: #1e1e1e;
+    color: #e0e0e0;
+    font-family: 'Arial, sans-serif';
+  }
+  
+  .rbc-toolbar {
+    background-color: #333;
+    color: #e0e0e0;
+  }
+  
+  .rbc-toolbar button {
+    background-color: #555;
+    color: #e0e0e0;
+  }
+  
+  .rbc-toolbar button:hover {
+    background-color: #777;
+    border: #333;
+  }
+  
+  .rbc-event {
+    background-color: #444;
+    color: #e0e0e0;
+    border-radius: 4px;
+  }
+  
+  .rbc-today {
+    background-color: #2e2e2e;
+  }
+  
+  .rbc-day-slot .rbc-time-slot {
+    background-color: #1e1e1e;
+    border: 0px;
+  }
+  
+  .rbc-date-cell {
+    color: #fff;
+  }
+  
+  .rbc-month-row {
+    border-color: #333;
+  }
+  
+  .rbc-header {
+    background-color: #333;
+    color: #e0e0e0;
+    border: #333 !important;
+  }
+  
+  /* Month View */
+  .rbc-month-view, .rbc-month-row, .rbc-date-cell, .rbc-day-bg {
+    border-color: #333;
+  }
+  
+  /* Week and Day Views */
+  .rbc-time-view, .rbc-time-header, .rbc-time-header-cell, .rbc-time-content {
+    border-color: #333;
+  }
+  
+  .rbc-time-content > * + * > * {
+    border-left: 1px solid #333;
+  }
+  
+  .rbc-time-content > .rbc-day-slot {
+    border-right: 1px solid #333;
+  }
+  
+  .rbc-time-header-content > .rbc-header {
+    border-left: 1px solid #333;
+  }
+  
+  /* Event styling */
+  .rbc-event {
+    border: 1px solid #333;
+  }
+  
+  /* Agenda View */
+  .rbc-agenda-view table {
+    border-color: #333;
+  }
+  
+  .rbc-agenda-view tbody > tr > td, .rbc-agenda-view thead > tr > th {
+    border: 1px solid #333;
+  }
+  
+  .rbc-timeslot-group {
+    border-color: #333;
+  }
+
+  .rbc-time-slot {
+    border: 0px;
+  }
+
+  .rbc-label {
+    border-color: #333 !important;
+  }
+
+  .rbc-day-bg {
+    border-color: #333 !important;
+  }
+
+  .rbc-time-header-gutter {
+    border-color: #333 !important;
+  }
+
+  .rbc-time-header-content {
+    border-color: #333;
+  }
+
+  .rbc-btn-group button {
+    border-color: #333
+  }
+
+  .rbc-active {
+    color: #333 !important;
+  }
