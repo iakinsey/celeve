@@ -1,7 +1,7 @@
 import { CalendarEvent, Event } from "./models";
 
 export async function request(url: string, body?: any) {
-    url = "http://localhost:9898" + url
+    url = "http://" + window.location.hostname + ":9898" + url
     const headers = {
         'Content-Type': 'application/json',
     };
