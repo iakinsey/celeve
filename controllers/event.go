@@ -29,7 +29,7 @@ func GetEvents(eg gateways.SqliteGateway, w http.ResponseWriter, r *http.Request
 	body, err := io.ReadAll(r.Body)
 
 	if err != nil {
-		log.Error().Err(err)
+		log.Error().Err(err).Msg("Unable to read request body")
 		http.Error(w, "Unable to read request body", http.StatusBadRequest)
 		return
 	}
@@ -42,7 +42,7 @@ func GetEvents(eg gateways.SqliteGateway, w http.ResponseWriter, r *http.Request
 	}
 
 	if err := json.Unmarshal(body, &params); err != nil {
-		log.Error().Err(err)
+		log.Error().Err(err).Msg("Unable to parse request body")
 		http.Error(w, "Unable to parse request body", http.StatusBadRequest)
 		return
 	}
@@ -66,13 +66,13 @@ func GetEvents(eg gateways.SqliteGateway, w http.ResponseWriter, r *http.Request
 	)
 
 	if err != nil {
-		log.Error().Err(err)
+		log.Error().Err(err).Msg("Unable to get events")
 		http.Error(w, "Unable to get events", http.StatusInternalServerError)
 		return
 	}
 
 	if err := json.NewEncoder(w).Encode(events); err != nil {
-		log.Error().Err(err)
+		log.Error().Err(err).Msg("Failed to encode JSON")
 		w.Header().Del("Content-Type")
 		http.Error(w, "Failed to encode JSON", http.StatusInternalServerError)
 	}
@@ -82,13 +82,13 @@ func GetTags(eg gateways.SqliteGateway, w http.ResponseWriter, r *http.Request) 
 	tags, err := eg.GetTags()
 
 	if err != nil {
-		log.Error().Err(err)
+		log.Error().Err(err).Msg("Unable to get tags")
 		http.Error(w, "Unable to get tags", http.StatusInternalServerError)
 		return
 	}
 
 	if err := json.NewEncoder(w).Encode(tags); err != nil {
-		log.Error().Err(err)
+		log.Error().Err(err).Msg("Failed to encode JSON")
 		w.Header().Del("Content-Type")
 		http.Error(w, "Failed to encode JSON", http.StatusInternalServerError)
 	}
@@ -98,7 +98,7 @@ func GetEvent(eg gateways.SqliteGateway, w http.ResponseWriter, r *http.Request)
 	body, err := io.ReadAll(r.Body)
 
 	if err != nil {
-		log.Error().Err(err)
+		log.Error().Err(err).Msg("Unable to read request body")
 		http.Error(w, "Unable to read request body", http.StatusBadRequest)
 		return
 	}
@@ -108,7 +108,7 @@ func GetEvent(eg gateways.SqliteGateway, w http.ResponseWriter, r *http.Request)
 	var params getEventParams
 
 	if err := json.Unmarshal(body, &params); err != nil {
-		log.Error().Err(err)
+		log.Error().Err(err).Msg("Unable to parse request body")
 		http.Error(w, "Unable to parse request body", http.StatusBadRequest)
 		return
 	}
@@ -121,13 +121,13 @@ func GetEvent(eg gateways.SqliteGateway, w http.ResponseWriter, r *http.Request)
 	event, err := eg.GetEvent(*params.ID)
 
 	if err != nil {
-		log.Error().Err(err)
+		log.Error().Err(err).Msg("Error while getting event")
 		http.Error(w, "Error while getting event", http.StatusInternalServerError)
 		return
 	}
 
 	if err := json.NewEncoder(w).Encode(event); err != nil {
-		log.Error().Err(err)
+		log.Error().Err(err).Msg("Failed to encode JSON")
 		w.Header().Del("Content-Type")
 		http.Error(w, "Failed to encode JSON", http.StatusInternalServerError)
 	}

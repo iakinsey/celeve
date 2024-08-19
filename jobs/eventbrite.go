@@ -59,11 +59,15 @@ func (s *eventbriteStrategy) Start() {
 	ticker := time.NewTicker(config.Get().JobInterval)
 	defer ticker.Stop()
 
+	if err := s.perform(); err != nil {
+		log.Error().Err(err).Msg("Failed eventbrite strategy perform")
+	}
+
 	for range ticker.C {
 		log.Info().Msg("Eventbrite strategy tick")
 
 		if err := s.perform(); err != nil {
-			log.Error().Msg(err.Error())
+			log.Error().Err(err).Msg("Failed eventbrite strategy perform")
 		}
 	}
 }
@@ -84,7 +88,7 @@ func (s *eventbriteStrategy) perform() error {
 	if err != nil && body == nil {
 		return err
 	} else if err != nil {
-		log.Error().Err(err)
+		log.Error().Err(err).Msg("Failed to get eventbrite body")
 	}
 
 	log.Info().Msg("Retrieving eventbrite events")
@@ -128,7 +132,7 @@ func (s *eventbriteStrategy) processUrl(ctx context.Context, i int, wg *sync.Wai
 	defer wg.Done()
 	defer func() {
 		if r := recover(); r != nil {
-			log.Error().Any("panic", r)
+			log.Error().Any("panic", r).Msg("processUrl failed")
 		}
 		<-sem
 	}()
@@ -136,18 +140,18 @@ func (s *eventbriteStrategy) processUrl(ctx context.Context, i int, wg *sync.Wai
 	body, _, err := s.getEventbriteBody(ctx, i)
 
 	if err != nil {
-		log.Error().Err(err)
+		log.Error().Err(err).Msg("Failed to get eventbrite body")
 		return
 	}
 
 	urls, err := s.extractEventbriteUrls(body)
 
 	if osErr := os.Remove(body.Name()); osErr != nil {
-		log.Error().Err(err)
+		log.Error().Err(err).Msg("Failed to remove eventbrite file")
 	}
 
 	if err != nil {
-		log.Error().Err(err)
+		log.Error().Err(err).Msg("Failed to extract eventbrite body")
 		return
 	}
 
@@ -167,7 +171,7 @@ func (s *eventbriteStrategy) assembleEventbriteURL(page int) string {
 func (s *eventbriteStrategy) extractEventbriteEvents(urls []string) {
 	defer func() {
 		if r := recover(); r != nil {
-			log.Error().Any("panic", r)
+			log.Error().Any("panic", r).Msg("Failed to extract eventbrite events")
 		}
 	}()
 
@@ -176,7 +180,7 @@ func (s *eventbriteStrategy) extractEventbriteEvents(urls []string) {
 		event, err := extractor.GetEvent()
 
 		if err != nil {
-			log.Error().Err(err)
+			log.Error().Err(err).Msg("Failed to get event")
 		} else {
 			log.Info().Msgf("Pushing event %s", event.ID)
 			s.channel <- *event
@@ -246,7 +250,7 @@ func (s *eventbriteStrategy) getEventbriteBody(ctx context.Context, page int) (*
 	pages, err := strconv.Atoi(pagesStr)
 
 	if err != nil {
-		log.Error().Err(err)
+		log.Error().Err(err).Msg("Failed to convert pages string")
 	}
 
 	body, err := util.SaveHtmlBody("eventbritelisting", htmlContent)

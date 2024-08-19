@@ -54,11 +54,15 @@ func (s *lumaStrategy) Start() {
 	ticker := time.NewTicker(config.Get().JobInterval)
 	defer ticker.Stop()
 
+	if err := s.perform(); err != nil {
+		log.Error().Err(err).Msg("Failed luma strategy perform")
+	}
+
 	for range ticker.C {
 		log.Info().Msg("Luma strategy tick")
 
 		if err := s.perform(); err != nil {
-			log.Error().Msg(err.Error())
+			log.Error().Err(err).Msg("Failed luma strategy perform")
 		}
 	}
 }
@@ -172,7 +176,7 @@ func (s *lumaStrategy) extractEvent(url string) {
 	event, err := extractor.GetEvent()
 
 	if err != nil {
-		log.Error().Err(err)
+		log.Error().Err(err).Msg("Failed to get luma event")
 	} else {
 		log.Info().Msgf("Pushing event %s", event.ID)
 		s.channel <- *event

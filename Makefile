@@ -17,3 +17,6 @@ docker-run:
 docker-export: docker
 	docker tag celeve 192.168.50.91:5000/celeve
 	docker push 192.168.50.91:5000/celeve
+
+archive:
+	git ls-files | tar -czf celeve.tar.gz --transform 's,^,celeve/,' -T -

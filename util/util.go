@@ -86,6 +86,6 @@ func RecoverError() error {
 
 func LogRecover() {
 	if err := RecoverError(); err != nil {
-		log.Error().Err(err)
+		log.Error().Err(err).Msg("Panic recovered")
 	}
 }

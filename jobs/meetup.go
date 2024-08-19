@@ -68,11 +68,15 @@ func (s *meetupStrategy) Start() {
 	ticker := time.NewTicker(config.Get().JobInterval)
 	defer ticker.Stop()
 
+	if err := s.perform(); err != nil {
+		log.Error().Err(err).Msg("Meetup strategy perform failed")
+	}
+
 	for range ticker.C {
 		log.Info().Msg("Meetup strategy tick")
 
 		if err := s.perform(); err != nil {
-			log.Error().Msg(err.Error())
+			log.Error().Err(err).Msg("Meetup strategy perform failed")
 		}
 	}
 }
