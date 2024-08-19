@@ -114,12 +114,16 @@ func getTags() (result map[string][]string, err error) {
 	var software, _ = keywords.ReadFile("keywords/software.json")
 	var startup, _ = keywords.ReadFile("keywords/startup.json")
 	var anime, _ = keywords.ReadFile("keywords/anime.json")
+	var sports, _ = keywords.ReadFile("keywords/sports.json")
+	var improv, _ = keywords.ReadFile("keywords/improv.json")
 	var tags = map[string][]byte{
 		"ai":           artificial_intelligence,
 		"refreshments": food_and_drink,
 		"software":     software,
 		"startup":      startup,
 		"anime":        anime,
+		"sports":       sports,
+		"improv":       improv,
 	}
 	result = make(map[string][]string)
 

@@ -96,6 +96,22 @@ func NewConfig() Config {
 					Tags:     []string{},
 					Timezone: "America/New_York",
 				},
+				{
+					Query:    "exercise",
+					Country:  "us",
+					Province: "ny",
+					City:     "New York",
+					Tags:     []string{},
+					Timezone: "America/New_York",
+				},
+				{
+					Query:    "improv",
+					Country:  "us",
+					Province: "ny",
+					City:     "New York",
+					Tags:     []string{},
+					Timezone: "America/New_York",
+				},
 			},
 			Eventbrite: []EventbriteStrategyConfig{
 				{
@@ -120,6 +136,18 @@ func NewConfig() Config {
 					Region:         "ny--new-york",
 					PrettyLocation: "New York, NY",
 					Query:          "vocaloid",
+					Tags:           []string{},
+				},
+				{
+					Region:         "ny--new-york",
+					PrettyLocation: "New York, NY",
+					Query:          "exercise",
+					Tags:           []string{},
+				},
+				{
+					Region:         "ny--new-york",
+					PrettyLocation: "New York, NY",
+					Query:          "improv",
 					Tags:           []string{},
 				},
 			},
