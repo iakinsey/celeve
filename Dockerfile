@@ -15,6 +15,6 @@ RUN ls
 RUN npm install
 RUN npm run build
 
-EXPOSE 8989
+EXPOSE 9898
 EXPOSE 23538
 CMD ["/app/start.sh"]

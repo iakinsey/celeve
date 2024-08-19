@@ -59,7 +59,7 @@ func NewConfig() Config {
 	return Config{
 		UserAgent:          defaultUserAgent,
 		EventStorePath:     filepath.Join(cwd, "events.db"),
-		HTTPServerAddress:  ":8989",
+		HTTPServerAddress:  ":9898",
 		JobInterval:        4 * time.Hour,
 		EnableProcessorJob: true,
 		Extractors: ExtractorConfig{
