@@ -53,8 +53,12 @@ export default class MainView extends Component<MainViewProps, MainViewState> {
         this.getTags()
     }
 
-    componentDidUpdate() {
-        this.getEvents()
+    componentDidUpdate(prevProps: MainViewProps, prevState: MainViewState) {
+      if (
+          prevState.tags !== this.state.tags
+      ) {
+          this.getEvents();
+      }
     }
 
     async getEvents() {
@@ -117,13 +121,13 @@ const customStyles = {
       backgroundColor: '#333',
       color: '#fff',
       zIndex: 1000,
-      marginTop: '0', // Removes the gap
-      position: 'absolute', // Ensures the menu is directly attached to the control
+      marginTop: '0',
+      position: 'absolute',
     }),
     menuPortal: (base: any) => ({ 
       ...base, 
       zIndex: 1000,
-      top: '100%', // Ensures the menu appears directly below the control
+      top: '100%',
     }),
     option: (provided: any, state: any) => ({
       ...provided,
@@ -159,56 +163,3 @@ const customStyles = {
       color: '#888',
     }),
   };
-/*
-const customStyles = {
-    control: (provided: any) => ({
-      ...provided,
-      backgroundColor: '#333',
-      border: 'none',
-      boxShadow: 'none',
-    }),
-    menu: (provided: any) => ({
-      ...provided,
-      backgroundColor: '#333',
-      color: '#fff',
-      zIndex: 1000,
-    }),
-    menuPortal: (base: any) => ({ 
-      ...base, 
-      zIndex: 1000,
-    }),
-    option: (provided: any, state: any) => ({
-      ...provided,
-      backgroundColor: state.isSelected ? '#555' : '#333',
-      color: state.isSelected ? '#fff' : '#ddd',
-      '&:hover': {
-        backgroundColor: '#444',
-      },
-    }),
-    multiValue: (provided: any) => ({
-      ...provided,
-      backgroundColor: '#555',
-      color: '#fff',
-    }),
-    multiValueLabel: (provided: any) => ({
-      ...provided,
-      color: '#fff',
-    }),
-    multiValueRemove: (provided: any) => ({
-      ...provided,
-      color: '#fff',
-      '&:hover': {
-        backgroundColor: '#777',
-        color: '#fff',
-      },
-    }),
-    singleValue: (provided: any) => ({
-      ...provided,
-      color: '#fff',
-    }),
-    placeholder: (provided: any) => ({
-      ...provided,
-      color: '#888',
-    }),
-  };
-  */

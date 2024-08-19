@@ -61,7 +61,7 @@ func (s *sqliteGateway) UpsertEvent(event models.CalendarEvent) error {
 	INSERT OR IGNORE INTO calendar_events (ID, Name, StartTime, EndTime, Location, Description, OriginURL, Tags, Processed, Relevant, Metadata)
 	VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
 	`
-	tags := strings.Join(event.Tags, ",")
+	tags := strings.Trim(strings.Join(event.Tags, ","), ",")
 
 	log.Info().Msgf("Saving event: %s", event.ID)
 
@@ -233,7 +233,7 @@ func (s *sqliteGateway) GetEvent(id string) (*models.CalendarEvent, error) {
 		return nil, err
 	}
 
-	event.Tags = strings.Split(tags, ",")
+	event.Tags = strings.Split(strings.Trim(tags, ","), ",")
 
 	return &event, nil
 }
@@ -259,7 +259,8 @@ func (s *sqliteGateway) GetTags() ([]string, error) {
 			SELECT DISTINCT part FROM split_string
 		)
 		SELECT part
-		FROM deduplicated_tags;
+		FROM deduplicated_tags
+		WHERE part != "";
 	`
 
 	t := time.Now()
@@ -320,7 +321,12 @@ func (s *sqliteGateway) queryMany(query string, args ...any) ([]models.CalendarE
 			return nil, err
 		}
 
-		event.Tags = strings.Split(tags, ",")
+		if tags != "" {
+			event.Tags = strings.Split(strings.Trim(tags, ","), ",")
+		} else {
+			event.Tags = make([]string, 0)
+		}
+
 		events = append(events, event)
 	}
 
