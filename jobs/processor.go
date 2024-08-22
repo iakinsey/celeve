@@ -90,16 +90,10 @@ func (s *processorJob) hydrateTags(events []*models.CalendarEvent) {
 
 func (s *processorJob) findTags(str string) []string {
 	var matchedKeys []string
-	words := strings.Fields(strings.ToLower(str))
-	wordSet := make(map[string]struct{})
-
-	for _, word := range words {
-		wordSet[word] = struct{}{}
-	}
 
 	for key, tagValues := range s.tags {
 		for _, value := range tagValues {
-			if _, found := wordSet[value]; found {
+			if strings.Contains(str, value) {
 				matchedKeys = append(matchedKeys, key)
 				break
 			}
